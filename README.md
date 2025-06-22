@@ -1,12 +1,89 @@
-# React + Vite
+# React Memo & useCallback Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This document explains how to optimize React applications using `React.memo` and the `useCallback` hook. These tools help prevent unnecessary re-renders, improving performance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Table of Contents
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. [What is React.memo?](#what-is-reactmemo)
+2. [What is useCallback?](#what-is-usecallback)
+3. [When to Use Them](#when-to-use-them)
+4. [Examples](#examples)
+5. [Best Practices](#best-practices)
+6. [References](#references)
+
+---
+
+## What is React.memo?
+
+`React.memo` is a higher-order component that memoizes a functional component. It prevents re-rendering if the component's props have not changed.
+
+```jsx
+const MyComponent = React.memo(function MyComponent(props) {
+    // component code
+});
+```
+
+---
+
+## What is useCallback?
+
+`useCallback` is a React hook that returns a memoized version of a callback function. It only changes if one of its dependencies changes.
+
+```jsx
+const memoizedCallback = useCallback(
+    () => {
+        // function code
+    },
+    [dependencies],
+);
+```
+
+---
+
+## When to Use Them
+
+- Use `React.memo` for functional components that render the same output given the same props.
+- Use `useCallback` to memoize functions passed as props to child components.
+
+---
+
+## Examples
+
+### Using React.memo
+
+```jsx
+const Button = React.memo(({ onClick, children }) => (
+    <button onClick={onClick}>{children}</button>
+));
+```
+
+### Using useCallback
+
+```jsx
+const handleClick = useCallback(() => {
+    // handle click
+}, [dependency]);
+```
+
+---
+
+## Best Practices
+
+- Only optimize components that re-render frequently with the same props.
+- Avoid premature optimization; measure performance first.
+- Combine with `useMemo` for expensive calculations.
+
+---
+
+## References
+
+- [React.memo Documentation](https://react.dev/reference/react/memo)
+- [useCallback Documentation](https://react.dev/reference/react/useCallback)
+
+---
+
+*© 2024 Your Company Name*
